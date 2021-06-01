@@ -1,8 +1,8 @@
 ##environment with key bits, includes pandas, bedtools and agat, which is only necessary if you want your own 4D tree. 
-conda activate gerpit
+<pre>conda activate gerpit</pre>
 
-#variable you'll need to have.
-#INPUT_FEATURES=$1 #input bedfile to calculate gerp scores across
+variable you'll need to have.
+<pre>#INPUT_FEATURES=$1 #input bedfile to calculate gerp scores across
 #PREFIX=$2 #opportunity to shorten file handle
 #DIR=$3 #working directory
 #BIN=$4 #location of these files
@@ -10,11 +10,14 @@ conda activate gerpit
 #PCE=$6 #progressiveCactus Environment path
 #HAL=$7 # location of hal alignment
 #GERP=$8 #gerp bin directory
+</pre>
 
-##Run 4D_tree.sh here. Note reduced input variables necessary
-bash 4D_tree.sh $DIR $PCE $HAL
+Run 4D_tree.sh here. Note reduced input variables necessary
+<pre>bash 4D_tree.sh $DIR $PCE $HAL
+</pre>
 
-#the following should really be run interactively so you can get a feel for times and how best to partition features into smaller chunks with respect to your resources.
+=======
+The following should really be run interactively so you can get a feel for times and how best to partition features into smaller chunks with respect to your resources.
 
 ##generate feature list. $1:number of features, $2:output file
 mkdir ${DIR}/output
@@ -22,7 +25,7 @@ mkdir ${DIR}/output
 FEAT_COUNT=$(wc -l ${INPUT_FEATURES} | cut -d" " -f1)
 
 ##make index files to break up bed into manageable jobs. 50 features should only take an hour or so, change the 50 below if you are more or less patient.
-paste <(seq 1 50 ${FEAT_COUNT}) <(seq 50 50 ${FEAT_COUNT}) | sed "$ s/$/${FEAT_COUNT}/" > ${DIR}/output/${PREFIX}_list.txt
+<pre>paste <(seq 1 50 ${FEAT_COUNT}) <(seq 50 50 ${FEAT_COUNT}) | sed "$ s/$/${FEAT_COUNT}/" > ${DIR}/output/${PREFIX}_list.txt
 while read line
  do bits=($line)
  source ${PCE} 
@@ -32,9 +35,10 @@ while read line
  done
 done < ${DIR}/output/${PREFIX}_list.txt
 unset FEAT_COUNT
+</pre>
 
-##to run on a cluster, this makes the most sense:
-while read line
+to run on a cluster, this makes the most sense:
+<pre>while read line
  do bits=($line)
  bsub -M 4000 -R "rusage[mem=4000]" -W 42:00 -o pp_${x}.o -e pp_${x}.e "source ${PCE} 
  cd ${DIR}
@@ -42,9 +46,10 @@ while read line
   do ${BIN}/gerpit.sh \$y ${INPUT_FEATURES} ${GENOME_NAME} ${DIR}/output ${PREFIX}_${bits[0]} ${HAL} ${GERP}
  done "
 done < ${DIR}/output/${PREFIX}_list.txt
+</pre>
 
-##Once these are finished, deal with N's and calculate mean GERP scores for each feature
-##this puts aportioned features together and then splits by chromomsome so sorting and calculations are faster: -M 40000 -W 10:00
+Once these are finished, deal with N's and calculate mean GERP scores for each feature
+<pre>##this puts aportioned features together and then splits by chromomsome so sorting and calculations are faster: -M 40000 -W 10:00
 cat ${DIR}/output/${PREFIX}*.ind.bed > ${DIR}/output/${PREFIX}.all.ind.bed
 
 ##split into chromosomes 1-19 & X. If missing data is from N's and are dealt with by refering to the original feature
@@ -83,3 +88,4 @@ for x in $(seq 1 1 19) X
 done
 
 #I've not removed intermediary files, as these can be interesting or necessary to debug, which I've put zero effort into sourcing.
+</pre>
