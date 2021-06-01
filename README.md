@@ -16,7 +16,8 @@ Run 4D_tree.sh here. Note reduced input variables necessary
 <pre>bash 4D_tree.sh $DIR $PCE $HAL
 </pre>
 
-=======
+     =======
+
 The following should really be run interactively so you can get a feel for times and how best to partition features into smaller chunks with respect to your resources.
 
 ##generate feature list. $1:number of features, $2:output file
