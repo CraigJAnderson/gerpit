@@ -1,4 +1,10 @@
-##environment with key bits, includes pandas, bedtools and agat, which is only necessary if you want your own 4D tree. 
+If you want to calculate GErP scores across a phylogeny for specific features, then included in this rough repo is a means of doing so. This was used to derive GERP scores for CTCF, enhancers and promoters as part of the Liver Cancer Evolution consortium, many details of which can be found here:https://www.nature.com/articles/s41586-020-2435-1
+
+WARNING: do not even attempt to use this if you don't have progressiveCactus running or if you're interested in whole genome measures as this is technically inappropriate and it'll take an extremely long time to run.
+
+Finally, always check the output. Is it sensible? Is anything missing? Did your jobs run properly?
+
+Supplied environment in .yml file with key package version, includes pandas, bedtools and agat, which is only necessary if you want your own 4D tree. 
 <pre>conda activate gerpit</pre>
 
 variable you'll need to have.
