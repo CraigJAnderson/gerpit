@@ -20,12 +20,13 @@ Run 4D_tree.sh here. Note reduced input variables necessary
 
 The following should really be run interactively so you can get a feel for times and how best to partition features into smaller chunks with respect to your resources.
 
-##generate feature list. $1:number of features, $2:output file
+<pre>##generate feature list. $1:number of features, $2:output file
 mkdir ${DIR}/output
 
 FEAT_COUNT=$(wc -l ${INPUT_FEATURES} | cut -d" " -f1)
+</pre>
 
-##make index files to break up bed into manageable jobs. 50 features should only take an hour or so, change the 50 below if you are more or less patient.
+make index files to break up bed into manageable jobs. 50 features should only take an hour or so, change the 50 below if you are more or less patient.
 <pre>paste <(seq 1 50 ${FEAT_COUNT}) <(seq 50 50 ${FEAT_COUNT}) | sed "$ s/$/${FEAT_COUNT}/" > ${DIR}/output/${PREFIX}_list.txt
 while read line
  do bits=($line)
