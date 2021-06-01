@@ -1,6 +1,6 @@
-If you want to calculate GErP scores across a phylogeny for specific features, then included in this rough repo is a means of doing so. This was used to derive GERP scores for CTCF, enhancers and promoters as part of the Liver Cancer Evolution consortium, many details of which can be found here:https://www.nature.com/articles/s41586-020-2435-1
+If you want to calculate GERP scores (http://mendel.stanford.edu/SidowLab/downloads/gerp/) across a phylogeny for a range of genomic features, then included in this rough repo is a means of doing so. This was used to derive GERP scores for mouse CTCF, enhancers and promoters as part of the Liver Cancer Evolution consortium, many details of which can be found here:https://www.nature.com/articles/s41586-020-2435-1
 
-WARNING: do not even attempt to use this if you don't have progressiveCactus running or if you're interested in whole genome measures as this is technically inappropriate and it'll take an extremely long time to run.
+WARNING: do not even attempt to use this if you don't have progressiveCactus running or if you're interested in whole genome measures as it'll take an extremely long time to run.
 
 Finally, always check the output. Is it sensible? Is anything missing? Did your jobs run properly?
 
@@ -97,3 +97,22 @@ done
 
 #I've not removed intermediary files, as these can be interesting or necessary to debug, which I've put zero effort into sourcing.
 </pre>
+
+Example output on a per nucleotide level "ind.bed" file:
+<pre>
+#chr, start, end, neutral, GERP score
+1       59170222        59170223        1.64    0.422
+1       59170223        59170224        1.64    -1.35
+1       59170224        59170225        1.64    1.64
+1       59177592        59177593        0.4     0.4
+1       59177593        59177594        0.4     -0.8
+1       59177594        59177595        0.4     0.4
+</pre>
+
+Example output on a per feature level "mean.bed" file:
+<pre>
+#chr, start(accounting for N's), end(accounting for N's), mean GERP score, length without N's, length original, original chr, original start, original end, metadata....
+1       89229866        89230254        -0.132018       388     415     27      1       89229866        89230281        c3h_shadowCTCF_224      caroli_CTCF_754 shadowCTCF
+1       89247203        89247638        -0.139228       435     435     0       1       89247203        89247638        c3h_shadowCTCF_225      caroli_CTCF_755 shadowCTCF
+</pre>
+
