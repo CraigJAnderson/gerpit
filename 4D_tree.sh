@@ -27,7 +27,8 @@ awk '{if ($1 != "Y") print $0}' Mus_musculus.GRCm38.100_5.bed > Mus_musculus.GRC
 ##here I use phylofit to estimate the phylogenetic tree to provide gerp. Took a while: -W 50:00 -M 15000 and I need to supply a basic binary tree, which I manually edited down from the original hal alignment tree.
 #(loxAfr3,(((canFam3,felCat8),(oviAri3,bosTau8)),(rheMac3,(oryCun2,(jacJac1,(micOch1,(Rattus,(CAROLI_EiJ,(CAST_EiJ,(C57B6J,C3H_HeJ))))))))));
 
-hal2maf --onlyOrthologs --noAncestors --noDupes --unique --refGenome C57B6J --refTargets Mus_musculus.GRCm38.100_6.bed 1509_ca.hal mm10_4D.maf ; phyloFit --tree \"(loxAfr3,(((canFam3,felCat8),(oviAri3,bosTau8)),(rheMac3,(oryCun2,(jacJac1,(micOch1,(Rattus,(CAROLI_EiJ,(CAST_EiJ,(C57B6J,C3H_HeJ))))))))));\" --msa-format MAF --out-root mm10_4D.mod mm10_4D.maf
+hal2maf --onlyOrthologs --noAncestors --noDupes --unique --refGenome C57B6J --refTargets Mus_musculus.GRCm38.100_6.bed 1509_ca.hal mm10_4D.maf
+phyloFit --tree \"(loxAfr3,(((canFam3,felCat8),(oviAri3,bosTau8)),(rheMac3,(oryCun2,(jacJac1,(micOch1,(Rattus,(CAROLI_EiJ,(CAST_EiJ,(C57B6J,C3H_HeJ))))))))));\" --msa-format MAF --out-root mm10_4D.mod mm10_4D.maf
 
 ##output for neutral tree in #mm10_4D.mod
 #ALPHABET: A C G T
