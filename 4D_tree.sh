@@ -5,7 +5,7 @@ HAL=$3 # location of hal alignment
 ##to begin, you'll need to generate a neutral phylogeny of your hal alignment for use with gerp. If you don't care about accuracy, just generate a tree with the following hal command:
 #halStats 1509_ca.hal --tree
 
-##otherwise, below is a way to derive a tree from 4D sites across your phylogeny from example mouse gff from ensembl 100. resources for successful completion: -W 10:00 -M 15000
+##otherwise, below is a way to derive a tree from 4D sites across your phylogeny from example mouse gff from ensembl 100.  In short, I pull out the coding sequence from a specific flavour of gene model "ensembl_havana" and export as a bed. I'm getting gene models and resources for successful completion: -W 10:00 -M 15000
 mkdir ${DIR}/src && cd ${DIR}/src
 
 wget ftp://ftp.ensembl.org/pub/release-100/gff3/mus_musculus/Mus_musculus.GRCm38.100.gff3.gz
@@ -14,10 +14,11 @@ agat_convert_sp_gxf2gxf.pl -g Mus_musculus.GRCm38.100_2.gff3 -o Mus_musculus.GRC
 awk '{if ($3 =="CDS") print $0}' Mus_musculus.GRCm38.100_3.gff3 > Mus_musculus.GRCm38.100_4.gff3
 agat_convert_sp_gff2bed.pl --gff Mus_musculus.GRCm38.100_4.gff3 -o Mus_musculus.GRCm38.100_4.bed
 
-##the following takes hours to complete for --conserved, but is very quick for a single genome (-W 20:00 -M 15000)
+##Get 4D sites with respect to the annotation bed just made. Takes hours to complete for --conserved, but is very quick for a single genome (-W 20:00 -M 15000)
 source ${PCE}
 hal4dExtract --conserved ${HAL} C57B6J Mus_musculus.GRCm38.100_4.bed Mus_musculus.GRCm38.100_4D.bed
 
+##convert to the more common bed format
 bed12ToBed6 -i Mus_musculus.GRCm38.100_4D.bed > Mus_musculus.GRCm38.100_5.bed
 
 ##I want a bed of each 4D site on only autosomes and the X chromosome
