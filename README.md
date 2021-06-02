@@ -109,6 +109,8 @@ Example output on a per nucleotide level "ind.bed" file:
 1       59177594        59177595        0.4     0.4
 </pre>
 
+n.b. N's will appear as NA in columns 4 and 5.
+
 Example output on a per feature level "mean.bed" file:
 <pre>
 #chr, start(accounting for N's), end(accounting for N's), mean GERP score, length without N's, length original, original chr, original start, original end, metadata....
